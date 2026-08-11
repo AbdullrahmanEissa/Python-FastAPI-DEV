@@ -1,6 +1,11 @@
-from typing import Optional
-from fastapi import FastAPI, HTTPException, status
+from fastapi import FastAPI, HTTPException, status, Depends
 from pydantic import BaseModel
+from typing import Optional
+from sqlalchemy.orm import Session
+import models
+from database import engine, get_db
+
+models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
@@ -9,41 +14,42 @@ class Item(BaseModel):
     name: str
     description: Optional[str] = None
 
-items = [
-    Item( id=1, name="Item 1", description="This is the first item"),
-    Item( id=2, name="Item 2", description="This is the second item")
-]
-@app.get("/")
-def read_root():
-    return {"Hello": "World"}
+@app.get("/items/{item_id}", response_model=Item)
+def read_item(item_id: int, db: Session = Depends(get_db)):
+    item = db.query(models.Item).filter(models.Item.id == item_id).first()
+    if item is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Item not found")
+    return item
 
-@app.get("/items/")
-def read_items():
+@app.get("/items", response_model=list[Item])
+def read_items(db: Session = Depends(get_db)):
+    items = db.query(models.Item).all()
     return items
 
-@app.get("/items/{item_id}")
-def read_item(item_id: int):
-    if item_id < 0 or item_id >= len(items):
+@app.post("/items", response_model=Item, status_code=status.HTTP_201_CREATED)
+def create_item(item: Item, db: Session = Depends(get_db)):
+    db_item = models.Item(id=item.id, name=item.name, description=item.description)
+    db.add(db_item)
+    db.commit()
+    db.refresh(db_item)
+    return db_item
+
+@app.put("/items/{item_id}", response_model=Item)
+def update_item(item_id: int, item: Item, db: Session = Depends(get_db )):
+    db_item = db.query(models.Item).filter(models.Item.id == item_id).first()
+    if db_item is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Item not found")
-    return items[item_id]
+    db_item.name = item.name
+    db_item.description = item.description
+    db.commit()
+    db.refresh(db_item)
+    return db_item
 
-@app.post("/items/")
-def create_item(item: Item):
-    items.append(item)
-    return item
-
-@app.put("/items/{item_id}")
-def update_item(item_id: int, item: Item):
-    if item_id < 0 or item_id >= len(items):
+@app.delete("/items/{item_id}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_item(item_id: int, db: Session = Depends(get_db)):
+    db_item = db.query(models.Item).filter(models.Item.id == item_id).first()
+    if db_item is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Item not found")
-    items[item_id] = item
-    return item
-
-@app.delete("/items/{item_id}")
-def delete_item(item_id: int):
-    if item_id < 0 or item_id >= len(items):
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Item not found")
-    deleted_item = items.pop(item_id)
-    return deleted_item
-
-
+    db.delete(db_item)
+    db.commit()
+    return None
