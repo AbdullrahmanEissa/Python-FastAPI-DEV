@@ -1,0 +1,4 @@
+Example 1: Extracting Path Parameters with Type Hinting
+Extracting Path Parameters with Type Hinting: To fetch a specific item using its ID, use @app.get('/posts/{post_id}'). In the function definition def get_post(post_id: int):, FastAPI automatically validates and converts the path parameter into an integer.
+Example 2: Using Query Parameters
+Using Query Parameters: To retrieve a list of items with parameters, use @app.get('/posts'). Define parameters in the function signature like def get_posts(limit: int = 10):. FastAPI automatically reads these from the URL query string.

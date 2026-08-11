@@ -1,0 +1,8 @@
+python3 -m venv venv
+source venv/bin/activate
+pip install fastapi[all]
+or 
+pip install fastapi uvicorn
+
+RUN! uvicorn main:app --reload ( main is the main.py and app is the varriable contains fastapi
+--reload any time you update the code uvicorn reloads the app )

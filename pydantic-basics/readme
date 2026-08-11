@@ -1,0 +1,19 @@
+Pydantic models are classes that define the structure and types of data your API expects. You create a model by subclassing BaseModel from the pydantic library. Each attribute in the class represents a field, and its type hint tells Pydantic how to validate it.
+Pydantic is the powerhouse behind FastAPI's data validation, allowing you to clearly define what data your API expects. This ensures that your application only handles valid data, preventing unexpected errors and making your code much cleaner.
+
+
+Example 1: Creating a New PostLet's say you're building a feature to create social media posts. You want to ensure every new post has a title and content, but an optional published status.1.Define the Schema:Create a Pydantic model that represents the data you expect.Pythonfrom pydantic import BaseModel
+
+class Post(BaseModel):
+    title: str
+    content: str
+    published: bool = True
+2.Create the Path Operation:Define a POST endpoint and use the model as a parameter type.Pythonfrom fastapi import FastAPI
+
+app = FastAPI()
+
+@app.post("/posts")
+def create_post(new_post: Post):
+    # new_post is now a validated Pydantic model instance
+    return {"data": new_post}
+3.Test the Validation:If a user sends a request missing the title or content, FastAPI will automatically reject it with a 422 error, keeping your application logic clean and safe.
