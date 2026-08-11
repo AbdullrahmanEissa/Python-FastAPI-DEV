@@ -57,6 +57,13 @@ Welcome to the ultimate step-by-step guide to building a robust, production-read
 * **Connecting the App:** Bridging the Python codebase with the PostgreSQL database.
 * **Real CRUD Operations:** Replacing in-memory arrays with persistent database transactions (Get All, Create, Get by ID, Delete, Update).
 
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/cabcd9c1-3a20-4054-9dc2-d4b87ad555a2" />
+
+
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/21289c0d-9e93-4531-89b5-618be3537562" />
+
+
+
 ### Project 5: Advanced Models & User Management
 
 * **Model Architecture:** Understanding the difference between Pydantic Models and ORM Models (Response Models).
@@ -113,7 +120,7 @@ cd <your-repo-folder>
 2. **Create and activate a virtual environment:**
 ```bash
 python -m venv venv
-source venv/bin/activate  # On Windows use: venv\Scripts\activate
+source venv/bin/activate
 
 ```
 
