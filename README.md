@@ -60,6 +60,10 @@ Welcome to the ultimate step-by-step guide to building a robust, production-read
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/cabcd9c1-3a20-4054-9dc2-d4b87ad555a2" />
 
 
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/21289c0d-9e93-4531-89b5-618be3537562" />
+
+
+
 ### Project 5: Advanced Models & User Management
 
 * **Model Architecture:** Understanding the difference between Pydantic Models and ORM Models (Response Models).
