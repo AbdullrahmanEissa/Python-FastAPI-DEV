@@ -1,5 +1,11 @@
 # FastAPI & PostgreSQL Masterclass
 
+<img width="1920" height="1080" alt="Screenshot from 2026-08-12 13-06-42" src="https://github.com/user-attachments/assets/95d58cac-9365-47f0-80c6-7044a2803f07" />
+
+<img width="1920" height="1080" alt="Screenshot from 2026-08-12 13-03-07" src="https://github.com/user-attachments/assets/8f2197f7-56a9-41f2-9055-54a6faf5f214" />
+
+<img width="1920" height="1080" alt="Screenshot from 2026-08-12 13-06-06" src="https://github.com/user-attachments/assets/1a3afaba-662a-4b3c-9452-a557f4ccfe6f" />
+
 Welcome to the ultimate step-by-step guide to building a robust, production-ready RESTful API using Python and FastAPI. This repository chronicles the journey from basic setup to advanced database relationships, authentication, and deployment configurations.
 
 ---
