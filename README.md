@@ -169,7 +169,74 @@ uvicorn main:app --reload
 docker compose up -d --build
 
 ```
+## 🐳 Docker Boilerplate & Production Adjustments
 
+When moving a FastAPI application from a local development environment to a Dockerized production environment, certain standard adjustments (boilerplate) are strictly required. Here is the checklist to make any FastAPI app Docker-ready:
+
+### 1. Dynamic Database URL (`database.py`)
+Containers run on isolated networks. Hardcoding `localhost` will cause the API to look for the database inside its own container (which will fail). Always use `os.getenv` to inject the database URL dynamically via Docker Compose.
+
+```python
+import os
+from sqlalchemy import create_engine
+
+# Automatically switches between Docker network URL and Local URL
+SQLALCHEMY_DATABASE_URL = os.getenv(
+    "DATABASE_URL", 
+    "postgresql://postgres:1@localhost/postgres"
+)
+engine = create_engine(SQLALCHEMY_DATABASE_URL)
+
+```
+
+### 2. Exposing the Server Interface (`Dockerfile`)
+
+Locally, Uvicorn binds to `127.0.0.1` by default. Inside Docker, this traps the server inside the container, blocking external requests. You must explicitly bind the host to `0.0.0.0`.
+
+```dockerfile
+# The essential Dockerfile CMD for FastAPI
+EXPOSE 8000
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+
+```
+
+### 3. Cross-Origin Resource Sharing - CORS (`main.py`)
+
+If your API sits behind Nginx or communicates with a separate frontend (React/Vue/Angular) hosted on a different domain, you must configure CORS, otherwise, the browser will block the requests.
+
+```python
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+
+app = FastAPI()
+
+# Replace "*" with your frontend domain in production
+origins = ["*"] 
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+```
+
+### 4. Docker Networking Context (`nginx.conf`)
+
+In a `docker-compose.yml` network, containers **do not** communicate using `localhost`. Docker uses a built-in DNS where the **Service Name** becomes the domain name.
+
+```nginx
+# WRONG ❌
+proxy_pass http://localhost:8000; 
+
+# CORRECT ✅ (Routing traffic to the 'fastapi_app' container service)
+location / {
+    proxy_pass http://fastapi_app:8000;
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+}
 ```
 
 ```
