@@ -151,8 +151,8 @@ Welcome to the ultimate step-by-step guide to building a robust, production-read
 
 1. **Clone the repository:**
 ```bash
-git clone 
-cd <your-repo-folder>
+git clone https://github.com/AbdullrahmanEissa/Python-FastAPI-DEV/
+cd ./Python-FastAPI-DEV
 
 ```
 
@@ -160,7 +160,7 @@ cd <your-repo-folder>
 2. **Create and activate a virtual environment:**
 ```bash
 python -m venv venv
-source venv/bin/activate
+source ./venv/bin/activate
 
 ```
 
