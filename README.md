@@ -71,12 +71,44 @@ Welcome to the ultimate step-by-step guide to building a robust, production-read
 * **Security:** Hashing passwords securely before saving them to the database.
 * **User Retrieval:** Fetching and returning user data safely by ID.
 
+<img width="1920" height="1080" alt="Screenshot from 2026-08-11 12-52-38" src="https://github.com/user-attachments/assets/33466251-beef-40d1-af16-35d79b8c5d05" />
+
+
+<img width="1920" height="1080" alt="Screenshot from 2026-08-11 12-54-10" src="https://github.com/user-attachments/assets/08075ecd-3b7f-468c-ba6f-4a5b17d3450c" />
+
+
+<img width="1920" height="1080" alt="Screenshot from 2026-08-11 21-13-10" src="https://github.com/user-attachments/assets/adbbe0e3-0aad-41c5-9885-bd90d81f9e1e" />
+
+
+<img width="1920" height="1080" alt="Screenshot from 2026-08-11 21-13-29" src="https://github.com/user-attachments/assets/7f1c3e4a-2b59-4ae4-9b4c-612ed6ab6f59" />
+
+
 ### Project 6: Project Structuring & JWT Authentication
 
 * **Refactoring:** Organizing routes and splitting code using FastAPI Routers (Prefixes and Tags).
 * **JWT Basics:** Understanding JSON Web Tokens.
 * **Login Flow:** Implementing the login process and generating tokens via `OAuth2PasswordRequestForm`.
 * **Token Verification:** Ensuring users are logged in and handling expired tokens.
+
+<img width="1920" height="1080" alt="Screenshot from 2026-08-12 07-45-22" src="https://github.com/user-attachments/assets/f25b5b96-fac0-49a9-9d69-316ec4dd3178" />
+
+
+<img width="1920" height="1080" alt="Screenshot from 2026-08-12 07-49-21" src="https://github.com/user-attachments/assets/bb0a561f-a8e7-42a3-9caa-605818a62f1b" />
+
+
+<img width="1920" height="1080" alt="Screenshot from 2026-08-12 07-49-45" src="https://github.com/user-attachments/assets/c0d607d8-22a5-4433-817b-9db451f9965d" />
+
+
+<img width="1920" height="1080" alt="Screenshot from 2026-08-12 07-49-53" src="https://github.com/user-attachments/assets/87c57fb4-734d-4e8a-9041-3a54cad39f48" />
+
+
+<img width="1920" height="1080" alt="Screenshot from 2026-08-12 08-05-51" src="https://github.com/user-attachments/assets/6ce8c814-3e40-46a0-82c6-256982aaa54a" />
+
+
+<img width="1920" height="1080" alt="Screenshot from 2026-08-12 08-11-49" src="https://github.com/user-attachments/assets/cb7e6ea3-d1e3-44a1-8bf3-305ca4879ad6" />
+
+
+<img width="1920" height="1080" alt="Screenshot from 2026-08-12 08-15-24" src="https://github.com/user-attachments/assets/f175e3bb-54e1-4b32-8f1b-9daf88fa12b2" />
 
 ### Project 7: Protected Routes & Database Relationships
 
@@ -86,7 +118,13 @@ Welcome to the ultimate step-by-step guide to building a robust, production-read
 * **Authorization:** Ensuring users can only update or delete their own data.
 * **SQLAlchemy Relationships:** Automatically fetching a user's data alongside their posts.
 
-Note In This Case These Projects Are Theoritical :
+### Theoritical Projects
+
+### Topics:
+
+ **Environment Varriables**
+  **Alembic**
+  **CORS**
 
 ### Project 8: Environment Variables & Voting/Likes System
 
