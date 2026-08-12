@@ -160,7 +160,7 @@ Create a `.env` file in the root directory and add your database credentials and
 uvicorn main:app --reload
 
 # To run using Docker Compose (includes Nginx & PostgreSQL)
-docker-compose up -d --build
+docker compose up -d --build
 
 ```
 
