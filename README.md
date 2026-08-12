@@ -239,4 +239,160 @@ location / {
 }
 ```
 
+### 5. Nginx Reverse Proxy Boilerplate (`nginx.conf`)
+When deploying without a managed load balancer, Nginx acts as the entry point. A production-ready Nginx configuration must handle worker connections and forward the correct client headers to the FastAPI backend.
+
+```nginx
+# Defines the number of worker processes (auto scales to CPU cores)
+worker_processes auto;
+
+events {
+    # Maximum number of simultaneous connections per worker
+    worker_connections 1024;
+}
+
+http {
+    server {
+        # Listen on standard HTTP port
+        listen 80;
+        
+        # Optional: Replace '_' with your domain name (e.g., server_name api.myapp.com;)
+        server_name _; 
+
+        location / {
+            # Route traffic to the Docker service named 'fastapi_app'
+            proxy_pass http://fastapi_app:8000;
+            
+            # Preserve the original host requested by the client
+            proxy_set_header Host $host;
+            
+            # Pass the real IP address of the client to FastAPI
+            proxy_set_header X-Real-IP $remote_addr;
+            
+            # Pass the chain of IP addresses if multiple proxies are involved
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            
+            # Pass the protocol used (HTTP or HTTPS)
+            proxy_set_header X-Forwarded-Proto $scheme;
+        }
+    }
+}
+
+```
+
+---
+
+## ☸️ Kubernetes (K8s) Architecture & Boilerplate
+
+Transitioning from `docker-compose` to Kubernetes requires separating components into distinct K8s objects. The golden rule is: **APIs are Stateless (Deployments)** and **Databases are Stateful (StatefulSets)**.
+
+### 1. K8s Internal DNS (Database Connection)
+
+Just like Docker Compose, Kubernetes has its own internal DNS. A Pod communicates with another Pod using its **Service Name**.
+
+*If your PostgreSQL Service is named `postgres-service`, your FastAPI `DATABASE_URL` environment variable becomes:*
+`postgresql://postgres:1@postgres-service:5432/postgres`
+
+### 2. The Database Boilerplate (StatefulSet + Headless Service)
+
+Databases require stable network IDs and persistent storage. We use a `StatefulSet` bound to a `PersistentVolumeClaim` (PVC), exposed via a Headless Service (`clusterIP: None`).
+
+```yaml
+# postgres-k8s.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-service
+spec:
+  clusterIP: None # Headless Service for StatefulSets
+  ports:
+  - port: 5432
+  selector:
+    app: postgres
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgres-statefulset
+spec:
+  serviceName: "postgres-service"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+      - name: postgres
+        image: postgres:15-alpine
+        env:
+        - name: POSTGRES_USER
+          value: "postgres"
+        - name: POSTGRES_PASSWORD
+          value: "1"
+        - name: POSTGRES_DB
+          value: "postgres"
+        ports:
+        - containerPort: 5432
+        volumeMounts:
+        - name: postgres-storage
+          mountPath: /var/lib/postgresql/data
+  volumeClaimTemplates:
+  - metadata:
+      name: postgres-storage
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 1Gi
+
+```
+
+### 3. The API Boilerplate (Deployment + LoadBalancer Service)
+
+FastAPI is stateless, meaning K8s can destroy and recreate its Pods anytime. We use a `Deployment` to manage replicas and a `LoadBalancer` (or NodePort) to expose it to the internet.
+
+```yaml
+# api-k8s.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fastapi-deployment
+spec:
+  replicas: 3 # Scale to 3 instances of FastAPI
+  selector:
+    matchLabels:
+      app: fastapi
+  template:
+    metadata:
+      labels:
+        app: fastapi
+    spec:
+      containers:
+      - name: fastapi
+        image: your-dockerhub-username/fastapi-backend:latest 
+        ports:
+        - containerPort: 8000
+        env:
+        - name: DATABASE_URL
+          # Connects to the DB using the K8s Service name
+          value: "postgresql://postgres:1@postgres-service:5432/postgres"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fastapi-service
+spec:
+  type: LoadBalancer # Exposes the API externally
+  ports:
+  - port: 80
+    targetPort: 8000
+  selector:
+    app: fastapi
+
+```
+
 ```
