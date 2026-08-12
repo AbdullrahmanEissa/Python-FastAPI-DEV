@@ -131,7 +131,7 @@ Welcome to the ultimate step-by-step guide to building a robust, production-read
 
 1. **Clone the repository:**
 ```bash
-git clone [https://github.com/AbdullrahmanEissa/Python-FastAPI-DEV/](https://github.com/AbdullrahmanEissa/Python-FastAPI-DEV/)
+git clone https://github.com/AbdullrahmanEissa/Python-FastAPI-DEV/
 cd ./Python-FastAPI-DEV
 
 ```
