@@ -86,6 +86,8 @@ Welcome to the ultimate step-by-step guide to building a robust, production-read
 * **Authorization:** Ensuring users can only update or delete their own data.
 * **SQLAlchemy Relationships:** Automatically fetching a user's data alongside their posts.
 
+Note In This Case These Projects Are Theoritical :
+
 ### Project 8: Environment Variables & Voting/Likes System
 
 * **Query Parameters:** Adding filtering, search, and pagination capabilities.
