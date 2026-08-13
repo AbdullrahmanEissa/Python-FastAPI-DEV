@@ -168,6 +168,81 @@ uvicorn main:app --reload
 # To run using Docker Compose (includes Nginx & PostgreSQL)
 docker compose up -d --build
 
+إضافة "عدة التجربة" (Testing Toolkit) لملف الـ `README.md` هي حركة في منتهى الاحترافية، لأنها بتوفر على أي حد بيقرأ الكود (أو عليك إنت شخصياً في المستقبل) وقت طويل جداً في التفكير "يا ترى أجرب التطبيق إزاي؟".
+
+إليك الجزء الخاص بالتجربة جاهز للنسخ.
+
+*(ملاحظة صغيرة قبل النسخ: الكود الخاص بك الذي راجعناه لا يحتوي على مسار لحذف المستخدم `DELETE /users/{id}`، لذلك أضفت لك كود هذا المسار في نهاية هذه الرسالة لتضيفه في ملف `user.py` حتى تكتمل التجربة بنجاح).*
+
+يمكنك إضافة هذا الجزء في نهاية ملف `README.md`:
+
+```markdown
+## 🧪 API Testing Toolkit (Swagger UI Guide)
+
+To easily verify that the application and database are working correctly, navigate to `http://localhost/docs` (or `http://127.0.0.1:8000/docs` if running locally without Docker) and follow this exact sequence:
+
+### 1. Add a New User (إنشاء مستخدم)
+* **Endpoint:** `POST /users/`
+* **Action:** Click *Try it out*.
+* **Request Body:**
+```json
+{
+  "email": "test@mail.com",
+  "password": "password123"
+}
+
+```
+
+* **Execute:** You should receive a `201 Created` response with the user's ID.
+
+### 2. Login & Authorize (تسجيل الدخول للحصول على الصلاحية)
+
+* **Action:** Scroll to the top of the page and click the green **Authorize** button (or the lock icon 🔒).
+* **Credentials:**
+* Username: `test@mail.com`
+* Password: `password123`
+
+
+* **Execute:** Click *Authorize*, then *Close*. All lock icons should now be locked, meaning your JWT token is active.
+
+### 3. Add an Item (إضافة منتج)
+
+* **Endpoint:** `POST /items/`
+* **Action:** Click *Try it out*.
+* **Request Body:**
+
+```json
+{
+  "name": "Mechanical Keyboard",
+  "description": "RGB mechanical keyboard with blue switches"
+}
+
+```
+
+* **Execute:** You should receive a `201 Created` response. Note the returned `"id"` (e.g., `1`).
+
+### 4. Find the Item in DB (البحث عن المنتج قبل حذفه)
+
+* **Endpoint:** `GET /items/{item_id}`
+* **Action:** Click *Try it out*.
+* **Input:** Enter the ID of the item you just created (e.g., `1`) in the `item_id` field.
+* **Execute:** You should receive a `200 OK` response with the item's details, confirming it is securely stored in PostgreSQL.
+
+### 5. Delete the Item (حذف المنتج)
+
+* **Endpoint:** `DELETE /items/{item_id}`
+* **Action:** Click *Try it out*.
+* **Input:** Enter the item ID (e.g., `1`).
+* **Execute:** You should receive a `204 No Content` response. (You can try step 4 again; it should now return a `404 Not Found`, proving the deletion worked).
+
+### 6. Delete the User (حذف المستخدم)
+
+* **Endpoint:** `DELETE /users/{id}`
+* **Action:** Click *Try it out*.
+* **Input:** Enter the ID of the user you created in step 1.
+* **Execute:** You should receive a `204 No Content` response, completely removing the user from the database.
+
+```
 ```
 ## 🐳 Docker Boilerplate & Production Adjustments
 
