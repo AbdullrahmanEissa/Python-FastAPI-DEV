@@ -109,12 +109,18 @@ To easily verify that the application and database are working correctly, naviga
 
 * **Execute:** You should receive a `201 Created` response. Note the returned `"id"`.
 
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/7272f2c8-b99e-4711-83f8-70e697e199ab" />
+
+
 
 4. **Find the Item in DB**
 * **Endpoint:** `GET /items/{item_id}`
 * **Action:** Click *Try it out*.
 * **Input:** Enter the ID of the item you just created.
 * **Execute:** You should receive a `200 OK` response with the item's details.
+
+  <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/0cfb6ac8-dc31-438d-8aaf-1f6cff084b79" />
+
 
 
 5. **Delete the Item**
@@ -123,14 +129,7 @@ To easily verify that the application and database are working correctly, naviga
 * **Input:** Enter the item ID.
 * **Execute:** You should receive a `204 No Content` response.
 
-
-6. **Delete the User**
-* **Endpoint:** `DELETE /users/{id}`
-* **Action:** Click *Try it out*.
-* **Input:** Enter the ID of the user you created.
-* **Execute:** You should receive a `204 No Content` response.
-
-
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/19edce11-d569-4d28-8cd1-9d042c40d95e" />
 
 ---
 
