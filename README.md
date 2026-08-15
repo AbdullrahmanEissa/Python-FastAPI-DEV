@@ -1,42 +1,6 @@
 # FastAPI & PostgreSQL Masterclass
 
-<img width="1920" height="1080" alt="Screenshot from 2026-08-12 13-06-42" src="https://github.com/user-attachments/assets/95d58cac-9365-47f0-80c6-7044a2803f07" />
-
-<img width="1920" height="1080" alt="Screenshot from 2026-08-12 13-03-07" src="https://github.com/user-attachments/assets/8f2197f7-56a9-41f2-9055-54a6faf5f214" />
-
-<img width="1920" height="1080" alt="Screenshot from 2026-08-12 13-06-06" src="https://github.com/user-attachments/assets/1a3afaba-662a-4b3c-9452-a557f4ccfe6f" />
-
-Welcome to the ultimate step-by-step guide to building a robust, production-ready RESTful API using Python and FastAPI. This repository chronicles the journey from basic setup to advanced database relationships, authentication, and deployment configurations.
-
----
-
-## Backend Development Flow (Cheat Sheet)
-
-هذا الملخص يمثل سير العمل (Flow) الأساسي لبناء أي تطبيق Backend من الصفر وحتى النشر:
-
-1. **الأساسيات والتحقق من البيانات (Pydantic & Routing):**
-   * **الفكرة:** التأكد من صحة البيانات التي يرسلها المستخدم قبل ربط الكود بقاعدة البيانات.
-   * **التنفيذ:** إنشاء كلاسات ترث من `BaseModel` لتحديد هيكل البيانات، واستخدام الروابط مثل `@app.get` و `@app.post` لاستقبال الطلبات.
-
-2. **ربط قاعدة البيانات (SQLAlchemy & Postgres):**
-   * **الفكرة:** حفظ البيانات بشكل دائم في قاعدة بيانات حقيقية بدلاً من الذاكرة العشوائية.
-   * **التنفيذ:** إعداد `database.py` للاتصال بـ Postgres، وإنشاء الجداول في `models.py` باستخدام SQLAlchemy.
-
-3. **التشفير وإدارة المستخدمين (Security):**
-   * **الفكرة:** تأمين كلمات المرور الخاصة بالمستخدمين وعدم حفظها بنصوص واضحة.
-   * **التنفيذ:** استخدام مكتبة `passlib` لإنشاء دوال التشفير (`hash_password`) والتحقق (`verify_password`).
-
-4. **تنظيم الكود (Refactoring & APIRouter):**
-   * **الفكرة:** تقسيم ملف `main.py` الضخم إلى ملفات أصغر لتسهيل الصيانة والقراءة.
-   * **التنفيذ:** إنشاء مجلد `routers` وفصل مسارات المستخدمين والمنتجات، ثم ربطها بالتطبيق الرئيسي عبر `app.include_router()`.
-
-5. **نظام المصادقة (Authentication & JWT):**
-   * **الفكرة:** التحقق من هوية المستخدم وإعطائه صلاحيات (Token) قبل تعديل البيانات.
-   * **التنفيذ:** إنشاء ملف `oauth2.py` لتوليد الـ JWT Token، وإضافة مسار `/login`، واستخدام `Depends(oauth2.get_current_user)` كحارس أمني للمسارات.
-
-6. **الحاويات والنشر (Docker & Nginx):**
-   * **الفكرة:** تغليف التطبيق ليعمل على أي سيرفر بنفس الكفاءة وبدون مشاكل في بيئة التشغيل.
-   * **التنفيذ:** كتابة `Dockerfile` لتطبيق بايثون، إعداد `nginx.conf` ليعمل كـ Reverse Proxy، وجمع المكونات عبر `docker-compose.yml`.
+Welcome to the ultimate step-by-step guide to building a robust, production-ready RESTful API using Python and FastAPI. This documentation outlines the complete engineering lifecycle, from basic setup and architectural design to advanced asynchronous database relationships, security, and deployment configurations.
 
 ---
 
@@ -45,97 +9,21 @@ Welcome to the ultimate step-by-step guide to building a robust, production-read
 * **Framework:** FastAPI
 * **Language:** Python 3.x
 * **Database:** PostgreSQL
-* **ORM:** SQLAlchemy
+* **ORM:** SQLAlchemy (Async)
+* **Database Driver:** Asyncpg
 * **Data Validation:** Pydantic
 * **Authentication:** JWT (JSON Web Tokens)
-* **Testing & API Interaction:** Postman
-* **Deployment:** Docker & Nginx
+* **Testing:** Postman / Swagger UI
+* **Deployment:** Docker, Nginx, Kubernetes
 
 ---
 
-## Course Outline
+## Getting Started: Local Setup & Testing
 
-### Project 1: Fundamentals & Environment Setup
-
-* **Environment Preparation:** Installing Python and VS Code (Windows/Mac).
-* **Virtual Environments:** Isolating project dependencies.
-* **FastAPI Basics:** Initializing the framework and creating the first Path Operations and HTTP Requests.
-* **API Testing:** Introduction to Postman for testing endpoints.
-
-<img width="738" height="210" alt="image" src="https://github.com/user-attachments/assets/871d4215-f81c-4081-9815-bb6bbd17f123" />
-
-### Project 2: Basic CRUD & Pydantic Validation
-
-* **Schema Validation:** Enforcing strict data structures using Pydantic.
-* **In-Memory CRUD:** Building Create, Read, Update, and Delete operations using local arrays.
-* **Status Codes:** Implementing proper HTTP status codes for responses.
-* **API Documentation:** Exploring FastAPI’s built-in automatic documentation (Swagger UI/ReDoc).
-* **Postman Mastery:** Organizing requests into Postman Collections.
-
-<img width="753" height="305" alt="image" src="https://github.com/user-attachments/assets/704bf443-244e-4c70-b206-9585ced94e01" />
-
-### Project 3: PostgreSQL Database Introduction
-
-* **Database Setup:** Installing PostgreSQL and pgAdmin.
-* **Schema Design:** Creating database schemas and tables.
-* **Raw SQL Mastery:** Writing foundational SQL queries (`SELECT`, `INSERT`, `UPDATE`, `DELETE`).
-* **Advanced Querying:** Filtering with `WHERE`, utilizing operators, pattern matching with `LIKE`, ordering results, and using `LIMIT`/`OFFSET`.
-
-<img width="1462" height="705" alt="image" src="https://github.com/user-attachments/assets/e1ffeff4-877c-4614-9c4e-738ed5fbc702" />
-
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/ae68d1b3-e2a4-4f50-85b8-e973a36d2295" />
-
-### Project 4: SQLAlchemy & Database Integration
-
-* **ORM Introduction:** Understanding Object-Relational Mapping and configuring SQLAlchemy.
-* **Connecting the App:** Bridging the Python codebase with the PostgreSQL database.
-* **Real CRUD Operations:** Replacing in-memory arrays with persistent database transactions (Get All, Create, Get by ID, Delete, Update).
-
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/cabcd9c1-3a20-4054-9dc2-d4b87ad555a2" />
-
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/21289c0d-9e93-4531-89b5-618be3537562" />
-
-### Project 5: Advanced Models & User Management
-
-* **Model Architecture:** Understanding the difference between Pydantic Models and ORM Models (Response Models).
-* **User Registration:** Creating the Users table and building the registration endpoint.
-* **Security:** Hashing passwords securely before saving them to the database.
-* **User Retrieval:** Fetching and returning user data safely by ID.
-
-<img width="1920" height="1080" alt="Screenshot from 2026-08-11 12-52-38" src="https://github.com/user-attachments/assets/33466251-beef-40d1-af16-35d79b8c5d05" />
-
-<img width="1920" height="1080" alt="Screenshot from 2026-08-11 12-54-10" src="https://github.com/user-attachments/assets/08075ecd-3b7f-468c-ba6f-4a5b17d3450c" />
-
-<img width="1920" height="1080" alt="Screenshot from 2026-08-11 21-13-10" src="https://github.com/user-attachments/assets/adbbe0e3-0aad-41c5-9885-bd90d81f9e1e" />
-
-<img width="1920" height="1080" alt="Screenshot from 2026-08-11 21-13-29" src="https://github.com/user-attachments/assets/7f1c3e4a-2b59-4ae4-9b4c-612ed6ab6f59" />
-
-### Project 6: Project Structuring & JWT Authentication
-
-* **Refactoring:** Organizing routes and splitting code using FastAPI Routers (Prefixes and Tags).
-* **JWT Basics:** Understanding JSON Web Tokens.
-* **Login Flow:** Implementing the login process and generating tokens via `OAuth2PasswordRequestForm`.
-* **Token Verification:** Ensuring users are logged in and handling expired tokens.
-
-<img width="1920" height="1080" alt="Screenshot from 2026-08-12 07-45-22" src="https://github.com/user-attachments/assets/f25b5b96-fac0-49a9-9d69-316ec4dd3178" />
-
-<img width="1920" height="1080" alt="Screenshot from 2026-08-12 07-49-21" src="https://github.com/user-attachments/assets/bb0a561f-a8e7-42a3-9caa-605818a62f1b" />
-
-<img width="1920" height="1080" alt="Screenshot from 2026-08-12 07-49-45" src="https://github.com/user-attachments/assets/c0d607d8-22a5-4433-817b-9db451f9965d" />
-
-<img width="1920" height="1080" alt="Screenshot from 2026-08-12 07-49-53" src="https://github.com/user-attachments/assets/87c57fb4-734d-4e8a-9041-3a54cad39f48" />
-
-<img width="1920" height="1080" alt="Screenshot from 2026-08-12 08-05-51" src="https://github.com/user-attachments/assets/6ce8c814-3e40-46a0-82c6-256982aaa54a" />
-
-<img width="1920" height="1080" alt="Screenshot from 2026-08-12 08-11-49" src="https://github.com/user-attachments/assets/cb7e6ea3-d1e3-44a1-8bf3-305ca4879ad6" />
-
-<img width="1920" height="1080" alt="Screenshot from 2026-08-12 08-15-24" src="https://github.com/user-attachments/assets/f175e3bb-54e1-4b32-8f1b-9daf88fa12b2" />
-
----
-
-## ⚙️ How to Run Locally
+### How to Run Locally
 
 1. **Clone the repository:**
+
 ```bash
 git clone https://github.com/AbdullrahmanEissa/Python-FastAPI-DEV/
 cd ./Python-FastAPI-DEV
@@ -161,25 +49,20 @@ pip install -r requirements.txt
 Create a `.env` file in the root directory and add your database credentials and JWT secret key.
 5. **Run the server:**
 
+```bash
 # To run locally with Uvicorn
 uvicorn main:app --reload
 
 # To run using Docker Compose (includes Nginx & PostgreSQL)
 docker compose up -d --build
 
-إضافة "عدة التجربة" (Testing Toolkit) لملف الـ `README.md` هي حركة في منتهى الاحترافية، لأنها بتوفر على أي حد بيقرأ الكود (أو عليك إنت شخصياً في المستقبل) وقت طويل جداً في التفكير "يا ترى أجرب التطبيق إزاي؟".
+```
 
-إليك الجزء الخاص بالتجربة جاهز للنسخ.
+### API Testing Toolkit (Swagger UI Guide)
 
-*(ملاحظة صغيرة قبل النسخ: الكود الخاص بك الذي راجعناه لا يحتوي على مسار لحذف المستخدم `DELETE /users/{id}`، لذلك أضفت لك كود هذا المسار في نهاية هذه الرسالة لتضيفه في ملف `user.py` حتى تكتمل التجربة بنجاح).*
+To easily verify that the application and database are working correctly, navigate to `http://localhost/docs` (or `[http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)` if running locally without Docker) and follow this exact sequence:
 
-يمكنك إضافة هذا الجزء في نهاية ملف `README.md`:
-
-## 🧪 API Testing Toolkit (Swagger UI Guide)
-
-To easily verify that the application and database are working correctly, navigate to `http://localhost/docs` (or `http://127.0.0.1:8000/docs` if running locally without Docker) and follow this exact sequence:
-
-### 1. Add a New User (إنشاء مستخدم)
+1. **Add a New User**
 * **Endpoint:** `POST /users/`
 * **Action:** Click *Try it out*.
 * **Request Body:**
@@ -191,11 +74,12 @@ To easily verify that the application and database are working correctly, naviga
 
 ```
 
+
 * **Execute:** You should receive a `201 Created` response with the user's ID.
 
-### 2. Login & Authorize (تسجيل الدخول للحصول على الصلاحية)
 
-* **Action:** Scroll to the top of the page and click the green **Authorize** button (or the lock icon 🔒).
+2. **Login & Authorize**
+* **Action:** Scroll to the top of the page and click the **Authorize** button (the lock icon).
 * **Credentials:**
 * Username: `test@mail.com`
 * Password: `password123`
@@ -203,12 +87,11 @@ To easily verify that the application and database are working correctly, naviga
 
 * **Execute:** Click *Authorize*, then *Close*. All lock icons should now be locked, meaning your JWT token is active.
 
-### 3. Add an Item (إضافة منتج)
 
+3. **Add an Item**
 * **Endpoint:** `POST /items/`
 * **Action:** Click *Try it out*.
 * **Request Body:**
-
 ```json
 {
   "name": "Mechanical Keyboard",
@@ -217,65 +100,146 @@ To easily verify that the application and database are working correctly, naviga
 
 ```
 
-* **Execute:** You should receive a `201 Created` response. Note the returned `"id"` (e.g., `1`).
 
-### 4. Find the Item in DB (البحث عن المنتج قبل حذفه)
+* **Execute:** You should receive a `201 Created` response. Note the returned `"id"`.
 
+
+4. **Find the Item in DB**
 * **Endpoint:** `GET /items/{item_id}`
 * **Action:** Click *Try it out*.
-* **Input:** Enter the ID of the item you just created (e.g., `1`) in the `item_id` field.
-* **Execute:** You should receive a `200 OK` response with the item's details, confirming it is securely stored in PostgreSQL.
+* **Input:** Enter the ID of the item you just created.
+* **Execute:** You should receive a `200 OK` response with the item's details.
 
-### 5. Delete the Item (حذف المنتج)
 
+5. **Delete the Item**
 * **Endpoint:** `DELETE /items/{item_id}`
 * **Action:** Click *Try it out*.
-* **Input:** Enter the item ID (e.g., `1`).
-* **Execute:** You should receive a `204 No Content` response. (You can try step 4 again; it should now return a `404 Not Found`, proving the deletion worked).
+* **Input:** Enter the item ID.
+* **Execute:** You should receive a `204 No Content` response.
 
-### 6. Delete the User (حذف المستخدم)
 
+6. **Delete the User**
 * **Endpoint:** `DELETE /users/{id}`
 * **Action:** Click *Try it out*.
-* **Input:** Enter the ID of the user you created in step 1.
-* **Execute:** You should receive a `204 No Content` response, completely removing the user from the database.
+* **Input:** Enter the ID of the user you created.
+* **Execute:** You should receive a `204 No Content` response.
 
-```
-```
-## 🐳 Docker Boilerplate & Production Adjustments
 
-When moving a FastAPI application from a local development environment to a Dockerized production environment, certain standard adjustments (boilerplate) are strictly required. Here is the checklist to make any FastAPI app Docker-ready:
 
-### 1. Dynamic Database URL (`database.py`)
-Containers run on isolated networks. Hardcoding `localhost` will cause the API to look for the database inside its own container (which will fail). Always use `os.getenv` to inject the database URL dynamically via Docker Compose.
+---
+
+## Advanced Architecture: Asynchronous Migration
+
+This application was migrated from a traditional Synchronous (Blocking) architecture to a modern, high-performance Asynchronous (Non-blocking) architecture. This allows the server to handle thousands of concurrent requests efficiently without freezing during I/O operations.
+
+### Core Technical Concepts
+
+* **Sync vs. Async (Blocking vs. Non-Blocking):**
+* **Sync:** The application executes tasks sequentially. If a database query takes time, the entire server thread blocks and cannot serve other users.
+* **Async:** The application sends the query to the database and uses `await` to pause the task. The server is freed up to serve other users while waiting. Once the database replies, the task resumes.
+
+
+* **The Event Loop:**
+The engine behind Async. It is a single thread that continuously monitors tasks. When it hits an `await`, it shelves that task and moves to the next ready task, ensuring the CPU is never idle during network waits.
+* **Concurrency:**
+Handling multiple tasks at the same time by intelligently switching between them during wait periods.
+* **Connection Pooling:**
+To prevent the async app from overwhelming the database by opening thousands of simultaneous connections, a Connection Pool is utilized to recycle a fixed number of active connections.
+
+### Implementation Details
+
+1. **Database Driver Upgrade (`requirements.txt`)**
+Replaced the synchronous `psycopg2-binary` with `asyncpg`, a high-speed, purely asynchronous PostgreSQL driver.
+2. **Database Configuration (`database.py`)**
+Updated the URL scheme to `postgresql+asyncpg://`. Replaced `create_engine` with `create_async_engine`, and `SessionLocal` with an `AsyncSession` factory.
+3. **Application Lifespan (`main.py`)**
+Implemented a FastAPI `@asynccontextmanager` called `lifespan`. Async engines cannot execute synchronous table creation directly, so `await conn.run_sync(models.Base.metadata.create_all)` is used to ensure tables are safely generated before accepting traffic.
+4. **Refactoring the Routers (`routers/`)**
+Converted route functions to `async def`. Upgraded queries to SQLAlchemy 2.0 syntax (e.g., `await db.execute(select(models.User))`). Added the `await` keyword before every database execution, commit, and refresh.
+5. **Unchanged Modules**
+`models.py` (Schema definition), `schemas.py` (In-memory validation), and `utils.py` (CPU-Bound password hashing) remained synchronous as they do not involve I/O waits.
+
+---
+
+## Backend Development Workflow
+
+This section outlines the standard workflow for building a FastAPI application from scratch to production.
+
+### Phase 1: Engineering Design
+
+Before writing code, the architecture must be clearly mapped out.
+
+1. **Identify Entities:** Define the core database tables (e.g., User, Item).
+2. **Database Modeling:** Define columns and data types (e.g., ID as integer, Email as unique string).
+3. **Validation Schemas:**
+* **Input (Create):** What data is required from the client?
+* **Output (Response):** What data is safely returned to the client (excluding passwords)?
+
+
+4. **Routing Design:** Define HTTP methods, paths, and security dependencies.
+
+### Phase 2: Project Foundation & Boilerplates
+
+1. **Environment Setup:** Create the virtual environment and install dependencies.
+2. **Database Engine (`database.py`):** Establish the connection URL, async engine, and session makers.
+3. **Security Utilities (`utils.py`):** Configure the bcrypt hashing context.
+4. **Authentication Logic (`oauth2.py`):** Setup JWT token generation and verification.
+
+### Phase 3: Application Logic (Implementation)
+
+1. **Define Models (`models.py`):** Translate the engineering design into SQLAlchemy ORM classes.
+2. **Define Schemas (`schemas.py`):** Translate the design into Pydantic models.
+3. **Initialize Application (`main.py`):** Instantiate the FastAPI app and configure the database lifespan events.
+
+> **Testing Checkpoint 1 (Database Verification):** Run the server locally and use a database client (e.g., pgAdmin) to verify that tables and columns were created successfully.
+
+4. **Develop Routers (`routers/`):** Implement the CRUD endpoints for authentication, users, and items.
+5. **Wire Routers:** Include the routers in the main application executable.
+
+> **Testing Checkpoint 2 (API Verification):** Access the Swagger UI documentation to test user registration, token generation, and authorized CRUD operations.
+
+### Phase 4: Production Preparation
+
+1. **CORS Configuration:** Configure Cross-Origin Resource Sharing in `main.py` to allow frontend clients to communicate with the API.
+2. **Dockerization:** Write the `Dockerfile` to package the application.
+3. **Reverse Proxy:** Configure `nginx.conf` to handle incoming internet traffic.
+4. **Orchestration:** Bind the application, database, and proxy together using `docker-compose.yml`.
+
+> **Testing Checkpoint 3 (Production Verification):** Build and run the Docker containers. Access the API through the Nginx proxy port to ensure internal container networking is fully functional.
+
+---
+
+## Production Deployment Boilerplates
+
+### Docker Integration
+
+When moving a FastAPI application to a Dockerized production environment, these standard adjustments are required:
+
+**1. Dynamic Database URL (`database.py`)**
+Always use environment variables to dynamically inject the database URL. Hardcoding `localhost` will fail inside Docker networks.
 
 ```python
 import os
-from sqlalchemy import create_engine
+from sqlalchemy.ext.asyncio import create_async_engine
 
-# Automatically switches between Docker network URL and Local URL
 SQLALCHEMY_DATABASE_URL = os.getenv(
     "DATABASE_URL", 
-    "postgresql://postgres:1@localhost/postgres"
+    "postgresql+asyncpg://postgres:1@localhost/postgres"
 )
-engine = create_engine(SQLALCHEMY_DATABASE_URL)
+engine = create_async_engine(SQLALCHEMY_DATABASE_URL)
 
 ```
 
-### 2. Exposing the Server Interface (`Dockerfile`)
-
-Locally, Uvicorn binds to `127.0.0.1` by default. Inside Docker, this traps the server inside the container, blocking external requests. You must explicitly bind the host to `0.0.0.0`.
+**2. Exposing the Server Interface (`Dockerfile`)**
+You must explicitly bind the host to `0.0.0.0` to allow external traffic into the container.
 
 ```dockerfile
-# The essential Dockerfile CMD for FastAPI
 EXPOSE 8000
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
 
 ```
 
-### 3. Cross-Origin Resource Sharing - CORS (`main.py`)
-
-If your API sits behind Nginx or communicates with a separate frontend (React/Vue/Angular) hosted on a different domain, you must configure CORS, otherwise, the browser will block the requests.
+**3. Cross-Origin Resource Sharing (`main.py`)**
 
 ```python
 from fastapi import FastAPI
@@ -283,7 +247,6 @@ from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
-# Replace "*" with your frontend domain in production
 origins = ["*"] 
 
 app.add_middleware(
@@ -296,56 +259,26 @@ app.add_middleware(
 
 ```
 
-### 4. Docker Networking Context (`nginx.conf`)
-
-In a `docker-compose.yml` network, containers **do not** communicate using `localhost`. Docker uses a built-in DNS where the **Service Name** becomes the domain name.
-
-```nginx
-# WRONG ❌
-proxy_pass http://localhost:8000; 
-
-# CORRECT ✅ (Routing traffic to the 'fastapi_app' container service)
-location / {
-    proxy_pass http://fastapi_app:8000;
-    proxy_set_header Host $host;
-    proxy_set_header X-Real-IP $remote_addr;
-}
-```
-
-### 5. Nginx Reverse Proxy Boilerplate (`nginx.conf`)
-When deploying without a managed load balancer, Nginx acts as the entry point. A production-ready Nginx configuration must handle worker connections and forward the correct client headers to the FastAPI backend.
+**4. Nginx Reverse Proxy (`nginx.conf`)**
+Nginx acts as the entry point, handling worker connections and forwarding client headers to the backend service. Note that Docker uses the service name (`fastapi_app`) instead of localhost for internal routing.
 
 ```nginx
-# Defines the number of worker processes (auto scales to CPU cores)
 worker_processes auto;
 
 events {
-    # Maximum number of simultaneous connections per worker
     worker_connections 1024;
 }
 
 http {
     server {
-        # Listen on standard HTTP port
         listen 80;
-        
-        # Optional: Replace '_' with your domain name (e.g., server_name api.myapp.com;)
         server_name _; 
 
         location / {
-            # Route traffic to the Docker service named 'fastapi_app'
             proxy_pass http://fastapi_app:8000;
-            
-            # Preserve the original host requested by the client
             proxy_set_header Host $host;
-            
-            # Pass the real IP address of the client to FastAPI
             proxy_set_header X-Real-IP $remote_addr;
-            
-            # Pass the chain of IP addresses if multiple proxies are involved
             proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-            
-            # Pass the protocol used (HTTP or HTTPS)
             proxy_set_header X-Forwarded-Proto $scheme;
         }
     }
@@ -353,31 +286,19 @@ http {
 
 ```
 
----
+### Kubernetes (K8s) Architecture
 
-## ☸️ Kubernetes (K8s) Architecture & Boilerplate
+Transitioning to Kubernetes requires separating components: APIs are Stateless (Deployments) and Databases are Stateful (StatefulSets).
 
-Transitioning from `docker-compose` to Kubernetes requires separating components into distinct K8s objects. The golden rule is: **APIs are Stateless (Deployments)** and **Databases are Stateful (StatefulSets)**.
-
-### 1. K8s Internal DNS (Database Connection)
-
-Just like Docker Compose, Kubernetes has its own internal DNS. A Pod communicates with another Pod using its **Service Name**.
-
-*If your PostgreSQL Service is named `postgres-service`, your FastAPI `DATABASE_URL` environment variable becomes:*
-`postgresql://postgres:1@postgres-service:5432/postgres`
-
-### 2. The Database Boilerplate (StatefulSet + Headless Service)
-
-Databases require stable network IDs and persistent storage. We use a `StatefulSet` bound to a `PersistentVolumeClaim` (PVC), exposed via a Headless Service (`clusterIP: None`).
+**1. Database Boilerplate (StatefulSet + Headless Service)**
 
 ```yaml
-# postgres-k8s.yaml
 apiVersion: v1
 kind: Service
 metadata:
   name: postgres-service
 spec:
-  clusterIP: None # Headless Service for StatefulSets
+  clusterIP: None
   ports:
   - port: 5432
   selector:
@@ -424,18 +345,15 @@ spec:
 
 ```
 
-### 3. The API Boilerplate (Deployment + LoadBalancer Service)
-
-FastAPI is stateless, meaning K8s can destroy and recreate its Pods anytime. We use a `Deployment` to manage replicas and a `LoadBalancer` (or NodePort) to expose it to the internet.
+**2. API Boilerplate (Deployment + LoadBalancer Service)**
 
 ```yaml
-# api-k8s.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: fastapi-deployment
 spec:
-  replicas: 3 # Scale to 3 instances of FastAPI
+  replicas: 3
   selector:
     matchLabels:
       app: fastapi
@@ -451,15 +369,14 @@ spec:
         - containerPort: 8000
         env:
         - name: DATABASE_URL
-          # Connects to the DB using the K8s Service name
-          value: "postgresql://postgres:1@postgres-service:5432/postgres"
+          value: "postgresql+asyncpg://postgres:1@postgres-service:5432/postgres"
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: fastapi-service
 spec:
-  type: LoadBalancer # Exposes the API externally
+  type: LoadBalancer
   ports:
   - port: 80
     targetPort: 8000
@@ -467,199 +384,49 @@ spec:
     app: fastapi
 
 ```
-### 3. Study Notes ( How To Let AI Help You )
-
-
-
-# The Ultimate FastAPI Backend Workflow
-
 
 ---
 
-##  المرحلة الأولى: التصميم الهندسي (على الورق)
-قبل كتابة أي سطر كود، يجب تصميم معمارية التطبيق بوضوح.
+## Course Outline & Project History
 
-### 1. تحديد الكيانات (Entities)
-* ما هي الجداول الأساسية؟ (مثال: `User`, `Item`, `Vote`).
-### 2. تصميم قاعدة البيانات (Models)
-* تحديد الأعمدة وأنواعها (مثال: `id` integer, `email` string unique).
-### 3. تصميم بوابات التحقق (Schemas)
-* **الدخول (Create):** ماذا أطلب من المستخدم؟ (مثال: `UserCreate` يطلب إيميل وباسوورد).
-* **الخروج (Response):** ماذا أرد على المستخدم؟ (مثال: `UserResponse` يرجع إيميل وid فقط - **بدون باسوورد**).
-### 4. تصميم المسارات (Routers)
-* تحديد الـ Method (`GET`, `POST`, `PUT`, `DELETE`).
-* تحديد الـ Path (مثال: `/items/{id}`).
-* تحديد حراس الأمن (هل يحتاج `current_user` أم عام؟).
+### Project 1: Fundamentals & Environment Setup
 
----
+* **Environment Preparation:** Installing Python and VS Code.
+* **Virtual Environments:** Isolating project dependencies.
+* **FastAPI Basics:** Initializing the framework and creating HTTP Requests.
+* **API Testing:** Introduction to Postman.
 
-## لمرحلة الثانية: تأسيس المشروع والأكواد الجاهزة (Boilerplates)
-هذه الملفات تُكتب مرة واحدة في بداية المشروع ونادراً ما تُعدل.
+### Project 2: Basic CRUD & Pydantic Validation
 
-### 1. إعداد البيئة
-```bash
-python -m venv venv
-source venv/bin/activate
-pip install fastapi[standard] uvicorn sqlalchemy psycopg2-binary passlib[bcrypt] python-jose
+* **Schema Validation:** Enforcing strict data structures using Pydantic.
+* **In-Memory CRUD:** Building Create, Read, Update, and Delete operations using local arrays.
+* **Status Codes:** Implementing proper HTTP status codes.
+* **API Documentation:** Exploring automatic documentation (Swagger UI/ReDoc).
+* **Postman Mastery:** Organizing requests into Collections.
 
-```
+### Project 3: PostgreSQL Database Introduction
 
-### 2. ملف `database.py` (محرك قاعدة البيانات)
+* **Database Setup:** Installing PostgreSQL and pgAdmin.
+* **Schema Design:** Creating database schemas and tables.
+* **Raw SQL Mastery:** Writing foundational SQL queries.
+* **Advanced Querying:** Filtering, pattern matching, and ordering results.
 
-```python
-import os
-from sqlalchemy import create_engine
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
+### Project 4: SQLAlchemy & Database Integration
 
-SQLALCHEMY_DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://postgres:1@localhost/postgres")
-engine = create_engine(SQLALCHEMY_DATABASE_URL)
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-Base = declarative_base()
+* **ORM Introduction:** Understanding Object-Relational Mapping.
+* **Connecting the App:** Bridging the Python codebase with PostgreSQL.
+* **Real CRUD Operations:** Replacing in-memory arrays with persistent database transactions.
 
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
+### Project 5: Advanced Models & User Management
 
-```
+* **Model Architecture:** Pydantic Models vs. ORM Models.
+* **User Registration:** Creating endpoints for user creation.
+* **Security:** Hashing passwords securely.
+* **User Retrieval:** Fetching data safely by ID.
 
-### 3. ملف `utils.py` (صندوق أدوات التشفير)
+### Project 6: Project Structuring & JWT Authentication
 
-```python
-from passlib.context import CryptContext
-
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-
-def hash_password(password: str):
-    return pwd_context.hash(password)
-
-def verify_password(plain_password: str, hashed_password: str):
-    return pwd_context.verify(plain_password, hashed_password)
-
-```
-
-### 4. ملف `oauth2.py` (مصنع وحارس الـ JWT Token)
-
-*(ينسخ كما هو من مشروعك السابق، مع التأكد من وضع `SECRET_KEY` في متغيرات البيئة).*
-
----
-
-## 💻 المرحلة الثالثة: كتابة منطق التطبيق (Implementation)
-
-1. **كتابة `models.py`:** تحويل التصميم الورقي إلى كلاسات SQLAlchemy.
-2. **كتابة `schemas.py`:** تحويل التصميم الورقي إلى كلاسات Pydantic.
-3. **كتابة `main.py` (المدير التنفيذي):**
-```python
-from fastapi import FastAPI
-import models
-from database import engine
-
-models.Base.metadata.create_all(bind=engine)
-app = FastAPI()
-
-```
-
-
-
-> 🛑 **محطة التوقف والتجربة الأولى (Database Check):**
-> * قم بتشغيل السيرفر محلياً: `uvicorn main:app --reload`
-> * افتح `pgAdmin` أو قاعدة البيانات وتأكد أن الجداول (Tables) تم إنشاؤها بشكل صحيح بجميع أعمدتها.
-> 
-> 
-
-4. **كتابة المسارات (Routers):**
-* إنشاء مجلد `routers/`.
-* كتابة مسار تسجيل الدخول `auth.py`.
-* كتابة مسارات المستخدمين `user.py`.
-* كتابة مسارات المنتجات `item.py`.
-
-
-5. **ربط المسارات بالمدير التنفيذي (`main.py`):**
-```python
-from routers import item, user, auth
-app.include_router(auth.router)
-app.include_router(user.router)
-app.include_router(item.router)
-
-```
-
-
-
-> 🛑 **محطة التوقف والتجربة الثانية (API Testing):**
-> * اذهب إلى متصفحك وافتح `http://127.0.0.1:8000/docs` (Swagger UI).
-> * جرب إنشاء مستخدم (POST /users).
-> * جرب تسجيل الدخول (زر Authorize).
-> * جرب إضافة منتج وتأكد أن نظام الحماية يعمل.
-> 
-> 
-
----
-
-## ☁️ المرحلة الرابعة: التجهيز للنشر (Deployment & Docker)
-
-لتجهيز التطبيق ليعمل على أي سيرفر حقيقي، نضيف الأكواد الجاهزة التالية:
-
-### 1. إعدادات الـ CORS في `main.py` (للسماح للفرونت إند بالاتصال)
-
-```python
-from fastapi.middleware.cors import CORSMiddleware
-# تضاف بعد app = FastAPI()
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
-```
-
-### 2. ملف `Dockerfile` (تغليف التطبيق)
-
-```dockerfile
-FROM python:3.12-slim
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONUNBUFFERED=1
-WORKDIR /app
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-COPY . .
-EXPOSE 8000
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
-
-```
-
-### 3. ملف `nginx.conf` (موظف الاستقبال)
-
-```nginx
-events {}
-http {
-    server {
-        listen 80;
-        location / {
-            proxy_pass http://fastapi_app:8000; 
-            proxy_set_header Host $host;
-            proxy_set_header X-Real-IP $remote_addr;
-        }
-    }
-}
-
-```
-
-### 4. ملف `docker-compose.yml` (الشبكة الجامعة)
-
-*(يحتوي على خدمات: `fastapi_app`, `postgres_db`, و `nginx` - مع ربط الـ Environment Variables ببعضها كما صممناها سابقاً).*
-
-> 🛑 **محطة التوقف والتجربة الثالثة والنهائية (Production Check):**
-> * قم بتشغيل الحاويات: `docker-compose up -d --build`
-> * تأكد أن التطبيق يعمل من خلال الدخول على `http://localhost/docs` (بدون بورت 8000 لأن Nginx يعمل الآن).
-> * اختبر جميع المسارات عبر Swagger UI للتأكد من اتصال حاوية التطبيق بحاوية قاعدة البيانات بنجاح.
-> 
-> 
-
----
-
-```
+* **Refactoring:** Organizing routes using FastAPI Routers.
+* **JWT Basics:** Understanding JSON Web Tokens.
+* **Login Flow:** Implementing authentication endpoints.
+* **Token Verification:** Ensuring users are logged in and handling token expiration.
