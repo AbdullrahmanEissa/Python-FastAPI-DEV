@@ -1,0 +1,19 @@
+1 . The Main.py : In The Begining It Contains The Endpoints But Now Contains The Routes To The ( Router Folder ) Which Contains the Endpoints now 
+2 . The Data is in the ram for the first time in array [] and the pydantic model ( the validation of data type in or out ) no orm or sql alchemy
+3 . now the data in a database sql ( postgress ) but how to tell the database to create data and we go from here :
+	
+	* We Have 3 files ( databse.py , models.py , schema.py ) each has a role in the database creation
+		1. The Database.py it creates the engine & sessionlocal & base
+			* engine : Establishes and manages the raw physical connection to the database.
+			* sessionlocal: handling db operations
+			* Base : class used to create ORM models that map Python classes to database tables.
+
+		2. The models.py Defines the SQLAlchemy ORM classes that map Python objects to physical database tables, columns, and constraints
+			* We Take The base from the db.py to inherit it to the all tables of the database
+
+		3. Defines Pydantic models to validate incoming client request payloads and serialize outgoing API responses.
+
+4 . We Need The Users To login and logout and not any one can update or delete items unless he is authorized to do so 
+	* we have 2 files ( oauth2.py , utils.py ) 
+        	1. utils the tool box who has the function of ciphering nad hashing
+		2. we have the oauth2.py who genearates tokens
