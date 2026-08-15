@@ -2,6 +2,9 @@
 
 Welcome to the ultimate step-by-step guide to building a robust, production-ready RESTful API using Python and FastAPI. This documentation outlines the complete engineering lifecycle, from basic setup and architectural design to advanced asynchronous database relationships, security, and deployment configurations.
 
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/dbfb86be-274b-4d1f-a37a-b154371615dc" />
+
+
 ---
 
 ## Tech Stack
