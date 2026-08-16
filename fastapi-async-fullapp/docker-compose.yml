@@ -2,13 +2,13 @@ version: '3.8'
 
 services:
   api:
-    build: .
+    image: abdueissa/fastapi-app:latest
     container_name: fastapi_async_api
     restart: always
     ports:
       - "8000:8000"
     environment:
-       # See The Cha nge From The Default DATABASE_URL To Use postgresql+asyncpg:// Instead Of postgresql:// 
+       # See The Change From The Default DATABASE_URL To Use postgresql+asyncpg:// Instead Of postgresql:// 
       - DATABASE_URL=postgresql+asyncpg://postgres:1@db:5432/postgres
     depends_on:
       - db
