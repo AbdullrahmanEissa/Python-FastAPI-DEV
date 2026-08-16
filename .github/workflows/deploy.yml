@@ -8,7 +8,8 @@ on:
       - 'fastapi-async-fullapp/**'
 
 jobs:
-  build-and-deploy:
+  # JOB 1: Cloud - Builds your FastAPI image and pushes to Docker Hub
+  build-image:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
@@ -27,25 +28,20 @@ jobs:
           push: true
           tags: abdueissa/fastapi-app:latest
 
-      - name: Copy Compose and Nginx files to VM
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.VM_HOST }}
-          username: ${{ secrets.VM_USERNAME }}
-          key: ${{ secrets.VM_SSH_KEY }}
-          source: "fastapi-async-fullapp/docker-compose.yml,fastapi-async-fullapp/nginx.conf"
-          target: "~/deploy"
-          strip_components: 1
-
-      - name: Deploy to Ubuntu VM via SSH
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.VM_HOST }}
-          username: ${{ secrets.VM_USERNAME }}
-          key: ${{ secrets.VM_SSH_KEY }}
-          script: |
-            cd ~/deploy
-            
-            docker compose pull
-            
-            docker compose up -d
+  # JOB 2: Local VM - Downloads the code and orchestrates the deployment
+  deploy-to-vm:
+    needs: build-image
+    runs-on: self-hosted
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        
+      - name: Deploy with Docker Compose
+        run: |
+          cd fastapi-async-fullapp
+          
+          # Pull the newly pushed image (and Nginx/Postgres) from Docker Hub
+          docker compose pull
+          
+          # Start or update the containers seamlessly
+          docker compose up -d
