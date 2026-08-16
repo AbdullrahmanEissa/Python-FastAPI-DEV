@@ -33,6 +33,7 @@ Welcome to the ultimate step-by-step guide to building a robust, production-read
 ```bash
 git clone https://github.com/AbdullrahmanEissa/Python-FastAPI-DEV/
 cd ./Python-FastAPI-DEV
+cd ./fastapi-async-fullapp
 
 ```
 
